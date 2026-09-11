@@ -1,10 +1,22 @@
 import { useState } from 'react'
+import MatchScreen from './features/match/MatchScreen'
 import './styles.css'
 
-type Screen = 'home' | 'create' | 'join'
+type Screen = 'home' | 'create' | 'join' | 'match'
+
+const DEMO_PLAYERS = [
+  { id: 'p1', name: 'Raphael' },
+  { id: 'p2', name: 'Jessica' },
+  { id: 'p3', name: 'Pedro' },
+  { id: 'p4', name: 'Josy' },
+]
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home')
+
+  if (screen === 'match') {
+    return <MatchScreen players={DEMO_PLAYERS} onExit={() => setScreen('home')} />
+  }
 
   return (
     <main className="app-shell">
@@ -15,7 +27,7 @@ export default function App() {
             <p className="eyebrow">AUREON GAMES</p>
             <h1 id="game-title">CAPTA CITY</h1>
           </div>
-          <span className="status-pill">V1 • ONLINE</span>
+          <span className="status-pill">V1 • EM CONSTRUÇÃO</span>
         </div>
 
         <div className="hero-copy">
@@ -43,15 +55,19 @@ export default function App() {
           <div className="panel" role="region" aria-label="Criar sala">
             <p className="panel-label">NOVA PARTIDA</p>
             <h3>Sua cidade está pronta.</h3>
-            <p>Na próxima etapa, este botão criará a sala multiplayer e gerará o código para os jogadores.</p>
-            <button type="button" className="ghost-action" onClick={() => setScreen('home')}>Voltar</button>
+            <p>A versão atual já permite testar o tabuleiro, rodar dados, coletar casais, chegar à SALA, gerar VGV e disputar o ranking. O código de sala online entra na próxima camada com Supabase.</p>
+            <div className="panel-actions">
+              <button type="button" className="play-demo-action" onClick={() => setScreen('match')}>🎮 JOGAR VERSÃO ATUAL</button>
+              <button type="button" className="ghost-action" onClick={() => setScreen('home')}>Voltar</button>
+            </div>
           </div>
         )}
 
         {screen === 'join' && (
           <div className="panel" role="region" aria-label="Entrar em sala">
             <label htmlFor="room-code">Código da sala</label>
-            <input id="room-code" name="room-code" inputMode="text" maxLength={8} placeholder="EX: CITY77" />
+            <input id="room-code" name="room-code" inputMode="text" maxLength={8} placeholder="EX: CITY77" disabled aria-describedby="room-note" />
+            <p id="room-note">O multiplayer online será ativado quando conectarmos o Supabase dedicado do CAPTA CITY.</p>
             <button type="button" className="ghost-action" onClick={() => setScreen('home')}>Voltar</button>
           </div>
         )}
