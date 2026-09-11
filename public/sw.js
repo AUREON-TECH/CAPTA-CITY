@@ -1,4 +1,5 @@
-const CACHE = 'capta-city-v1-safe-shell'
+const CACHE_PREFIX = 'capta-city-'
+const CACHE = `${CACHE_PREFIX}v2-safe-shell`
 const CORE = ['./', './index.html', './offline.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png']
 const SENSITIVE_PATH = /\/(api|auth|login|logout|token|session|supabase|graphql)(\/|$)/i
 const SENSITIVE_QUERY = /(^|&)(token|access_token|refresh_token|code|password|session)=/i
@@ -36,7 +37,7 @@ self.addEventListener('install', event => {
 })
 
 self.addEventListener('activate', event => {
-  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))))
+  event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith(CACHE_PREFIX) && key !== CACHE).map(key => caches.delete(key)))))
   self.clients.claim()
 })
 
