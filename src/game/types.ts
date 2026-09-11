@@ -55,6 +55,7 @@ export type GamePlayerState = {
   sales: number
   score: number
   cards: string[]
+  activeEffects: string[]
   skippedTurns: number
 }
 
