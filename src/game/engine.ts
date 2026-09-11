@@ -15,6 +15,7 @@ function createPlayerState(player: PlayerInput): GamePlayerState {
     sales: 0,
     score: 0,
     cards: [],
+    activeEffects: [],
     skippedTurns: 0,
   }
 }
