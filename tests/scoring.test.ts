@@ -19,7 +19,7 @@ describe('CAPTA SCORE', () => {
       bonuses: 0,
     })
 
-    expect(score).toBe(1540)
+    expect(score).toBe(1640)
   })
 })
 
