@@ -265,6 +265,6 @@ export function skipLudoTurn(state: LudoState, playerId: string, roll: number): 
   next.lastRoll = roll
   next.lastEvent = null
   next.revision += 1
-  advanceTurn(next, roll === 6 ? 1 : roll)
+  advanceTurn(next, roll)
   return next
 }
