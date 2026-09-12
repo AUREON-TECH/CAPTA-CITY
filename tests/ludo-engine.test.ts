@@ -5,6 +5,7 @@ import {
   getMovablePieceIds,
   getSharedCell,
   moveLudoPiece,
+  skipLudoTurn,
 } from '../src/game/ludo'
 
 const players = [
@@ -37,9 +38,9 @@ describe('CAPTA CITY Ludo engine', () => {
 
   it('captures an opponent on a shared non-safe cell', () => {
     const state = createLudoMatch(players)
-    state.players.p1.pieces[0].progress = 5
+    state.players.p1.pieces[0].progress = 4
 
-    const targetGlobalCell = getSharedCell('red', 8)
+    const targetGlobalCell = getSharedCell('red', 7)
     expect(CAPTA_SAFE_CELLS.has(targetGlobalCell)).toBe(false)
 
     const blueProgress = (targetGlobalCell - 13 + 52) % 52
@@ -47,7 +48,7 @@ describe('CAPTA CITY Ludo engine', () => {
 
     const moved = moveLudoPiece(state, 'p1', 'p1-c1', 3)
 
-    expect(moved.state.players.p1.pieces[0].progress).toBe(8)
+    expect(moved.state.players.p1.pieces[0].progress).toBe(7)
     expect(moved.state.players.p2.pieces[0].progress).toBe(-1)
     expect(moved.capturedPieceIds).toEqual(['p2-c1'])
   })
@@ -62,6 +63,17 @@ describe('CAPTA CITY Ludo engine', () => {
     expect(CAPTA_SAFE_CELLS.has(getSharedCell('red', 52))).toBe(true)
     expect(moved.state.players.p2.pieces[0].progress).toBe(39)
     expect(moved.capturedPieceIds).toEqual([])
+  })
+
+  it('keeps the turn after rolling a six even when no piece can move', () => {
+    const state = createLudoMatch(players)
+    state.players.p1.pieces.forEach((piece) => {
+      piece.progress = 56
+    })
+
+    expect(getMovablePieceIds(state, 'p1', 6)).toEqual([])
+    const skipped = skipLudoTurn(state, 'p1', 6)
+    expect(skipped.currentPlayerId).toBe('p1')
   })
 
   it('requires an exact roll to enter the SALA', () => {
