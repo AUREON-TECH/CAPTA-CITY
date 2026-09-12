@@ -127,7 +127,7 @@ create policy "turns_insert_self_member" on public.game_turns for insert to auth
 create or replace function public.roll_ludo_dice(p_room_id uuid)
 returns integer
 language plpgsql
-security definer
+security invoker
 set search_path = public
 as $$
 declare
@@ -148,6 +148,7 @@ end;
 $$;
 
 revoke all on function public.roll_ludo_dice(uuid) from public;
+revoke all on function public.roll_ludo_dice(uuid) from anon;
 grant execute on function public.roll_ludo_dice(uuid) to authenticated;
 
 -- Realtime publication (run only when each table is not already published):
