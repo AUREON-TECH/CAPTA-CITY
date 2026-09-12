@@ -7,6 +7,7 @@ import type { RoomSnapshot } from './features/lobby/roomApi'
 import LudoMatchScreen from './features/match/LudoMatchScreen'
 import { supabase } from './lib/supabase'
 import './styles.css'
+import './ludo.css'
 
 export default function App() {
   const [session, setSession] = useState<Session | null | undefined>(undefined)
