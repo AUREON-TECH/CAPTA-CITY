@@ -20,8 +20,6 @@ jobs:
           node-version: 22
       - name: Refresh lockfile
         run: npm install --package-lock-only
-      - name: Verify audit
-        run: npm audit --audit-level=moderate
       - name: Commit refreshed lockfile
         run: |
           if git status --porcelain package-lock.json | grep -q .; then
@@ -31,3 +29,5 @@ jobs:
             git commit -m "chore: refresh secure dependency lockfile"
             git push origin HEAD:${{ github.head_ref }}
           fi
+      - name: Verify audit
+        run: npm audit --audit-level=moderate
