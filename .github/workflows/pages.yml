@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: capta-city-pages-dist
   cancel-in-progress: true
 
 jobs:
@@ -51,6 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Let legacy branch Pages deployment finish
+        run: sleep 45
+
+      - name: Deploy Vite build to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
