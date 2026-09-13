@@ -1,8 +1,10 @@
+const SERVICE_WORKER_VERSION = 'v3-public-static-only'
+
 export async function registerServiceWorker() {
-  if (!('serviceWorker' in navigator)) return
+  if (!('serviceWorker' in navigator) || !window.isSecureContext) return
 
   try {
-    const registration = await navigator.serviceWorker.register('./sw.js?v=1', {
+    const registration = await navigator.serviceWorker.register(`./sw.js?v=${SERVICE_WORKER_VERSION}`, {
       updateViaCache: 'none',
     })
     void registration.update().catch(() => undefined)
