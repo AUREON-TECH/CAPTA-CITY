@@ -1,7 +1,7 @@
 {
   "name": "capta-city",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +10,7 @@
     "test:run": "vitest run"
   },
   "dependencies": {
+    "@supabase/supabase-js": "2.57.4",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },
@@ -21,7 +22,7 @@
     "@vitejs/plugin-react": "5.0.2",
     "jsdom": "26.1.0",
     "typescript": "5.8.3",
-    "vite": "7.1.4",
-    "vitest": "3.2.4"
+    "vite": "7.3.6",
+    "vitest": "5.0.0"
   }
 }
